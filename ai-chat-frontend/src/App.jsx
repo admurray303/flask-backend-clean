@@ -12,7 +12,8 @@ function App() {
     const userMessage = prompt;
 
     try {
-      const res = await fetch("http://127.0.0.1:5000/chat", {
+      const API_BASE = import.meta.env.VITE_API_URL;
+      const res = await fetch(`${API_BASE}/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
