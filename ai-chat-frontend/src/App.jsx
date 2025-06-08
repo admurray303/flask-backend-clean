@@ -12,12 +12,7 @@ function App() {
     const userMessage = prompt;
 
     try {
-<<<<<<< HEAD
-      const res = await fetch("http://127.0.0.1:5000/chat", {
-=======
-      const API_BASE = import.meta.env.VITE_API_URL;
-      const res = await fetch(`${API_BASE}/chat`, {
->>>>>>> e96f108389feb6e70c2e7ca063f812330bd90cfc
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,7 +31,6 @@ function App() {
     setPrompt(""); // Clear input
   } catch (err) {
     const errorMsg = "Error: " + err.message;
-    setResponse(errorMsg);
     setHistory((prev) => [...prev, { role: "assistant", content: errorMsg }]);
   } finally {
     setLoading(false);
@@ -46,7 +40,7 @@ function App() {
 
  return (
   <div style={{ padding: "2rem", maxWidth: "600px", margin: "auto" }}>
-    <h1>AI Chat</h1>
+    <h1 className="text-3xl font-bold underline text-blue-500">Hello from the updated React app!</h1>
     
     <form onSubmit={handleSubmit}>
       <textarea
