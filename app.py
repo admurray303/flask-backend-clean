@@ -8,7 +8,7 @@ from openai import OpenAI
 
 load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-
+"""
 def get_crypto_price(coin: str = "bitcoin") -> str:
     url = f"https://api.coingecko.com/api/v3/simple/price?ids={coin}&vs_currencies=usd"
     try:
@@ -21,7 +21,7 @@ def get_crypto_price(coin: str = "bitcoin") -> str:
         return f"Error fetching price for {coin}: {str(e)}"
 
 
-
+"""
 app = Flask(__name__)
 CORS(app)
 
@@ -31,7 +31,7 @@ def chat():
     prompt = data.get("prompt", "")
     if not prompt:
         return jsonify({"error": "Prompt is required"}), 400
-    tools = [
+    """tools = [
         {
             "type": "function",
             "function": {
@@ -50,21 +50,24 @@ def chat():
             }
         }
     ]
-
+"""
+    instructions = "You are a helpful Assistant. you will answer every question like a pirate"
     try:
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",  # Use the correct model for chat
             messages=[
+                {"role": "system", "content" : instructions},
                 {"role": "user", "content": prompt}
             ],
-            tools = tools,
-            tool_choice = "auto",
+            #tools = tools,
+            #tool_choice = "auto",
             max_tokens=100
         )
         first_choice = response.choices[0]
         msg = first_choice.message
 
         # If GPT wants to call a tool
+        """
         if msg.tool_calls:
             tool_call = msg.tool_calls[0]
             function_name = tool_call.function.name
@@ -74,6 +77,7 @@ def chat():
                 result = get_crypto_price(**function_args)
                 return jsonify({"response": result})
         return jsonify({"response": response.choices[0].message.content.strip()})
+        """
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
