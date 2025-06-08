@@ -67,7 +67,7 @@ def chat():
         msg = first_choice.message
 
         # If GPT wants to call a tool
-        """
+
         if msg.tool_calls:
             tool_call = msg.tool_calls[0]
             function_name = tool_call.function.name
@@ -77,7 +77,7 @@ def chat():
                 result = get_crypto_price(**function_args)
                 return jsonify({"response": result})
         return jsonify({"response": response.choices[0].message.content.strip()})
-        """
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
